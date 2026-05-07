@@ -1,19 +1,20 @@
 const http = require('http');
-const fs =require('fs');
-const querystring = require('querystring');
+const fs = require('fs');
 
-const server = http.createServer((req, res) => {
+const requestHandler = (req, res) => {
+
     console.log(req.url, req.method);
 
-    // Home Page (Form)
+    // Home Page
     if (req.url === '/' && req.method === 'GET') {
+
         res.setHeader('Content-Type', 'text/html');
         res.write('<html>');
         res.write('<head><title>Complete Coding</title></head>');
         res.write('<body>');
         res.write('<h2>Enter your details</h2>');
+
         res.write('<form action="/submit-details" method="POST">');
-        res.write('<form method="POST" action="/submit">');
 
         res.write('<label>Name:</label>');
         res.write('<input type="text" name="username" placeholder="Enter your Name"><br><br>');
@@ -32,30 +33,50 @@ const server = http.createServer((req, res) => {
         res.write('</form>');
         res.write('</body>');
         res.write('</html>');
+
         return res.end();
     }
 
-  
+    // Handle Form Submission
+    else if (req.url.toLowerCase() === "/submit-details" && req.method === "POST") {
+
+        const body = [];
+
+        req.on('data', chunk => {
+            body.push(chunk);
+        });
+
+        req.on('end', () => {
+
+            const fullBody = Buffer.concat(body).toString();
+            console.log(fullBody);
+
+            const params = new URLSearchParams(fullBody);
+            const bodyObject = Object.fromEntries(params);
+
+            console.log(bodyObject);
+
+            const userData = JSON.stringify(bodyObject) + "\n";
+
+            fs.writeFileSync('user.txt', userData);
+
+            res.statusCode = 302;
+            res.setHeader('Location', '/');
+            return res.end();
+        });
+
+        return;
+    }
 
     // Default Page
-    else if(req.url.toLowerCase === "/submit-details"&& req.method == "POST"){
-
-       
-        fs.writeFileSync('user.txt','prashant Jain ');
-
-        res.statusCode=302;
-        res.setHeader('Location', '/');
-    }
     res.setHeader('Content-Type', 'text/html');
     res.write('<html>');
     res.write('<head><title>Complete Coding</title></head>');
-    res.write('<body><h2>like share subscribe</h2></body>');
+    res.write('<body><h2>Like Share Subscribe</h2></body>');
     res.write('</html>');
     res.end();
-});
+};
 
-const port = 3004;
 
-server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-});
+
+module.exports = userrequestHandler;
