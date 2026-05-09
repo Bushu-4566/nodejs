@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 
-const requestHandler = (req, res) => {
+const userRequestHandler = (req, res) => {
 
     console.log(req.url, req.method);
 
@@ -58,15 +58,24 @@ const requestHandler = (req, res) => {
 
             const userData = JSON.stringify(bodyObject) + "\n";
 
-            fs.writeFileSync('user.txt', userData);
-
-            res.statusCode = 302;
+            fs.writeFile('user.txt', userData, (err) => {
+            
+                    console.error('Data witten sucessfully');
+                        res.statusCode = 302;
             res.setHeader('Location', '/');
-            return res.end();
+             return res.end();
+            
+            });
+
+        
+           
         });
 
-        return;
+        
     }
+    else{
+
+    
 
     // Default Page
     res.setHeader('Content-Type', 'text/html');
@@ -75,8 +84,9 @@ const requestHandler = (req, res) => {
     res.write('<body><h2>Like Share Subscribe</h2></body>');
     res.write('</html>');
     res.end();
+    }
 };
 
 
 
-module.exports = userrequestHandler;
+module.exports = userRequestHandler;
