@@ -1,9 +1,12 @@
 const http = require('http');
-const userRequestHandler = require('./user');
 
-const server = http.createServer(userRequestHandler);
 
-const PORT = 3004;
+const server = http.createServer((req,res)=>{
+      console.log(req);
+
+});
+
+const PORT = 3002;
 
 server.listen(PORT, () => {
     console.log(`Server running at address http://localhost:${PORT}`);
