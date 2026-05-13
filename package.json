@@ -1,25 +1,17 @@
 {
-  "name": "airbnb",
+  "name": "npm-test",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "this project is being created to learn about npm",
+  "license": "ISC",
+  "author": "Complete coding",
+  "type": "commonjs",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
-    "build:css": "tailwindcss -i ./views/input.css -o ./public/output.css"
+    "start": "nodemon  app.js",
+    "khul-ja-sim-sim": "node app.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
-    "autoprefixer": "^10.5.0",
-    "nodemon": "^3.1.14",
-    "postcss": "^8.5.10",
-    "tailwindcss": "^3.4.19"
-  },
-  "dependencies": {
-    "body-parser": "^2.2.2",
-    "express": "^5.2.1"
+    "nodemon": "^3.1.14"
   }
 }
